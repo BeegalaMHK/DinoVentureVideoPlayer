@@ -1,13 +1,22 @@
-import { dataset } from "../constant/dataset";
+import { useDataset } from "../../context/DatasetContext";
 
-export default function Sidebar({ active, setActive, isOpen, isCollapsed }) {
+export default function Sidebar({
+  active,
+  setActive,
+  isOpen,
+  setIsOpen,
+  isCollapsed,
+  setIsCollapsed,
+}) {
+  const { categories } = useDataset();
+
   return (
     <>
       {/* MOBILE OVERLAY */}
       {isOpen && (
         <div
           className="fixed inset-0 bg-black/50 z-40 md:hidden"
-          onClick={() => setActive(active)}
+          onClick={() => setIsOpen(false)}
         />
       )}
 
@@ -30,10 +39,13 @@ export default function Sidebar({ active, setActive, isOpen, isCollapsed }) {
           label="Home"
           isCollapsed={isCollapsed}
           active={!active}
-          onClick={() => setActive(null)}
+          onClick={() => {
+            setActive(null);
+            setIsOpen(false);
+          }}
         />
 
-        {dataset.categories.map((c) => (
+        {categories.map((c) => (
           <SidebarItem
             key={c.category.slug}
             icon={
@@ -46,7 +58,11 @@ export default function Sidebar({ active, setActive, isOpen, isCollapsed }) {
             label={c.category.name}
             isCollapsed={isCollapsed}
             active={active === c.category.slug}
-            onClick={() => setActive(c.category.slug)}
+            onClick={() => {
+              setActive(c.category.slug);
+              setIsCollapsed(false);
+              setIsOpen(false);
+            }}
           />
         ))}
       </div>
@@ -59,18 +75,17 @@ function SidebarItem({ icon, label, active, onClick, isCollapsed }) {
     <button
       onClick={onClick}
       className={`
-        relative w-full flex items-center rounded-xl mb-2 transition-all duration-300 overflow-hidden
-        ${
-          isCollapsed
-            ? "flex-col py-3 justify-center"
-            : "gap-3 px-3 py-2 justify-start"
-        }
-        ${
-          active
-            ? "bg-blue-500/20 text-blue-400"
-            : "hover:bg-white/10 text-white"
-        }
-      `}
+
+    relative w-full flex items-center rounded-xl mb-2 transition-all duration-300 overflow-hidden
+
+    ${
+      isCollapsed
+        ? "flex-col py-3 justify-center"
+        : "gap-3 px-3 py-2 justify-start"
+    }
+
+    ${active ? "bg-blue-500/20 text-blue-400" : "hover:bg-white/10 text-white"}
+  `}
     >
       {/* 👉 Active indicator bar */}
       <span
@@ -82,7 +97,6 @@ function SidebarItem({ icon, label, active, onClick, isCollapsed }) {
 
       {icon}
 
-      {/* Animated label */}
       <span
         className={`
           text-sm font-medium whitespace-nowrap transition-all duration-300

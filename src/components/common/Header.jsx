@@ -1,4 +1,4 @@
-import companyLogo from "../assets/dino_ventures_logo.png";
+import companyLogo from "../../assets/dino_ventures_logo.png";
 import { Search, Menu } from "lucide-react";
 
 export default function Header({
@@ -10,20 +10,26 @@ export default function Header({
   return (
     <header className="sticky top-0 z-50 bg-[#242424] h-14 flex items-center px-4 shadow">
       {/* LEFT */}
-      <div className="flex items-center gap-4 w-56">
+      <div className="flex items-center gap-2 md:gap-4 min-w-max md:w-56 shrink-0 pr-4">
         <button
           onClick={toggleSidebar}
-          className="p-2 hover:bg-white/10 rounded-full"
+          className="p-1.5 md:p-2 hover:bg-white/10 rounded-full transition-colors flex items-center justify-center text-white"
         >
-          <Menu className="w-6 h-6 text-white" />
+          <Menu className="w-5 h-5 md:w-6 md:h-6" />
         </button>
 
         <div
           onClick={resetHome}
-          className="flex items-center gap-1 cursor-pointer"
+          className="flex items-center gap-1.5 md:gap-2 cursor-pointer group"
         >
-          <img src={companyLogo} className="w-10 h-10" alt="logo" />
-          <span className="font-bold text-xl text-white">Dino Player</span>
+          <img
+            src={companyLogo}
+            className="w-7 h-7 md:w-9 md:h-9 transition-transform group-hover:scale-110"
+            alt="logo"
+          />
+          <span className="font-bold text-sm md:text-lg text-white tracking-tight leading-none">
+            DinoVenture
+          </span>
         </div>
       </div>
 

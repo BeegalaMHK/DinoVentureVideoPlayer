@@ -1,7 +1,8 @@
-import { dataset } from "../constant/dataset";
+import { useDataset } from "../context/DatasetContext";
 import VideoCard from "./VideoCard";
 export default function VideoFeed({ search, activeCategory, onSelect }) {
-  let videos = dataset.categories.flatMap((g) =>
+  const { categories } = useDataset();
+  let videos = categories.flatMap((g) =>
     g.contents.map((v) => ({ ...v, category: g.category })),
   );
 

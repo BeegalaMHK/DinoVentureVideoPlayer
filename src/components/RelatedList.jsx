@@ -1,10 +1,10 @@
-import { dataset } from "../constant/dataset";
+import { useDataset } from "../context/DatasetContext";
 import { motion } from "framer-motion";
 
 export default function RelatedList({ category, onSelect }) {
-  const list = dataset.categories.find(
-    (c) => c.category.slug === category.slug,
-  ).contents;
+  const { categories } = useDataset();
+  const list =
+    categories.find((c) => c.category.slug === category.slug)?.contents ?? [];
 
   return (
     <div className="space-y-4">

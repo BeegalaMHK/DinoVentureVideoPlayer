@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
 
-import Header from "./components/Header";
-import Sidebar from "./components/Sidebar";
+import Header from "./components/common/Header";
+import Sidebar from "./components/common/Sidebar";
 import VideoFeed from "./components/VideoFeed";
 import FullPlayer from "./components/FullPlayer";
 import MiniPlayer from "./components/MiniPlayer";
-import { dataset } from "./constant/dataset";
+import { useDataset } from "./context/DatasetContext";
 
 function App() {
   const [search, setSearch] = useState("");
@@ -17,6 +17,8 @@ function App() {
 
   const [activeVideo, setActiveVideo] = useState(null);
   const [miniVideo, setMiniVideo] = useState(null);
+
+  const dataset = useDataset();
 
   const getCategory = (video) =>
     dataset.categories.find((c) =>
@@ -45,7 +47,9 @@ function App() {
           active={activeCategory}
           setActive={setActiveCategory}
           isOpen={isSidebarOpen}
+          setIsOpen={setIsSidebarOpen}
           isCollapsed={isCollapsed}
+          setIsCollapsed={setIsCollapsed}
         />
 
         <div className="flex-1 overflow-y-auto">
